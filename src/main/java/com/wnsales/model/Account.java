@@ -16,13 +16,13 @@ import org.springframework.beans.BeanUtils;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Account")
+@Table(name = "Accounts")
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private UUID id;
+    private Long id;
 
     @Column(name = "ACCOUNT_NAME")
     private String accountName;
@@ -31,7 +31,6 @@ public class Account {
     private String iban;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "USER_ID")
     private User user;
 
     @Override
@@ -47,9 +46,12 @@ public class Account {
     }
 
     //Builder
-    private Account(AccountDTO model) {
-        BeanUtils.copyProperties(model, this);
-        this.user = User.of(model.getUser());
+    private Account(AccountDTO dto) {
+        BeanUtils.copyProperties(dto, this);
+        if (dto.getUserId() != null){
+            this.user = new User();
+            this.user.setId(dto.getUserId());
+        }
     }
 
     public static Account of(AccountDTO source){

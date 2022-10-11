@@ -8,8 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -20,10 +23,13 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class UserDTO {
 
-    private UUID id;
+    private Long id;
 
+    @NotBlank
     private String name;
 
+    @Email
+    @NotBlank
     private String email;
 
     private Set<AccountDTO> accounts;
@@ -42,7 +48,7 @@ public class UserDTO {
 
     //Builder
     private UserDTO(User model) {
-        BeanUtils.copyProperties(model, this);
+        BeanUtils.copyProperties(model, this, "accounts");
         this.accounts = AccountDTO.of(model.getAccounts());
     }
 
@@ -56,4 +62,7 @@ public class UserDTO {
         return source.stream().map(UserDTO::new).collect(Collectors.toSet());
     }
 
+    public static Page<UserDTO> of(Page<User> source){
+        return source.map(UserDTO::new);
+    }
 }

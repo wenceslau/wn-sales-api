@@ -1,17 +1,17 @@
 package com.wnsales.model.dto;
 
 import com.wnsales.model.Account;
-import com.wnsales.model.User;
-import lombok.AllArgsConstructor;
+import com.wnsales.util.validations.IbanConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -19,13 +19,16 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class AccountDTO {
-    private UUID id;
+    private Long id;
 
+    @NotBlank
     private String accountName;
 
+    @IbanConstraint
     private String iban;
 
-    private UserDTO user;
+    @NotNull
+    private Long userId;
 
     @Override
     public boolean equals(Object o) {
@@ -42,7 +45,7 @@ public class AccountDTO {
     //Builder
     private AccountDTO(Account model) {
         BeanUtils.copyProperties(model, this);
-        this.user = UserDTO.of(model.getUser());
+        this.userId = model.getId();
     }
 
     public static AccountDTO of(Account source){
@@ -54,4 +57,9 @@ public class AccountDTO {
     public static Set<AccountDTO> of(Set<Account> source){
         return source.stream().map(AccountDTO::new).collect(Collectors.toSet());
     }
+
+    public static Page<AccountDTO> of(Page<Account> source){
+        return source.map(AccountDTO::new);
+    }
+
 }

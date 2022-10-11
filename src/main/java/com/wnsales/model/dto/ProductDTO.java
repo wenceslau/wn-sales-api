@@ -23,7 +23,7 @@ public class ProductDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private UUID id;
+    private Long id;
 
     @Column(name = "NAME")
     private String name;

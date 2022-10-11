@@ -1,9 +1,7 @@
 package com.wnsales.model;
 
 import javax.persistence.*;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,13 +15,13 @@ import org.springframework.beans.BeanUtils;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "User")
+@Table(name = "Users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private UUID id;
+    private Long id;
 
     @Column(name = "NAME")
     private String name;
@@ -32,8 +30,8 @@ public class User {
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
-    private Set<Account> accounts;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Account> accounts = Collections.EMPTY_SET;
 
     @Override
     public boolean equals(Object o) {
@@ -48,9 +46,10 @@ public class User {
     }
 
     //Builder
-    private User(UserDTO model) {
-        BeanUtils.copyProperties(model, this);
+    private User(UserDTO dto) {
+        BeanUtils.copyProperties(dto, this);
     }
+
     public static User of(UserDTO source){
         if (source == null)
             return null;

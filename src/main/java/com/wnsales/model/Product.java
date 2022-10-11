@@ -17,13 +17,13 @@ import org.springframework.beans.BeanUtils;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Product")
+@Table(name = "Products")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private UUID id;
+    private Long id;
 
     @Column(name = "NAME")
     private String name;
@@ -32,7 +32,6 @@ public class Product {
     private BigDecimal price;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
 
     @Override
@@ -48,9 +47,9 @@ public class Product {
     }
 
     //Builder
-    private Product(ProductDTO model) {
-        BeanUtils.copyProperties(model, this);
-        this.account = Account.of(model.getAccount());
+    private Product(ProductDTO dto) {
+        BeanUtils.copyProperties(dto, this);
+        this.account = Account.of(dto.getAccount());
     }
 
     public static Product of(ProductDTO source){
