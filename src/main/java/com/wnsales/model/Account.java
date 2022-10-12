@@ -1,15 +1,16 @@
 package com.wnsales.model;
 
+import com.wnsales.model.dto.AccountDTO;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.BeanUtils;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.wnsales.model.dto.AccountDTO;
-import lombok.*;
-import org.springframework.beans.BeanUtils;
 
 @Getter
 @Setter

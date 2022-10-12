@@ -1,22 +1,17 @@
 package com.wnsales.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wnsales.model.Product;
-import com.wnsales.model.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Getter

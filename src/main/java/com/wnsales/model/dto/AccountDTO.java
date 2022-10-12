@@ -1,8 +1,6 @@
 package com.wnsales.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wnsales.model.Account;
-import com.wnsales.model.User;
 import com.wnsales.util.validations.IbanConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

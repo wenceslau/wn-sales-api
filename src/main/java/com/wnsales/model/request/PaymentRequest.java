@@ -1,12 +1,14 @@
 package com.wnsales.model.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wnsales.model.dto.ProductDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Setter

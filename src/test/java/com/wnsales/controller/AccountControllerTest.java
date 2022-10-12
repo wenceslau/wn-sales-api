@@ -1,7 +1,6 @@
 package com.wnsales.controller;
 
 import com.wnsales.model.Account;
-import com.wnsales.model.User;
 import com.wnsales.model.dto.AccountDTO;
 import com.wnsales.service.AccountService;
 import com.wnsales.util.Utils;

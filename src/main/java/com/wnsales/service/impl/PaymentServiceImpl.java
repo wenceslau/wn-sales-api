@@ -4,7 +4,6 @@ import com.wnsales.model.Account;
 import com.wnsales.model.Product;
 import com.wnsales.model.dto.LinkDTO;
 import com.wnsales.model.request.*;
-import com.wnsales.model.dto.ProductDTO;
 import com.wnsales.repository.AccountRepository;
 import com.wnsales.repository.ProductRepository;
 import com.wnsales.service.PaymentService;

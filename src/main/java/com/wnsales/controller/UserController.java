@@ -1,6 +1,5 @@
 package com.wnsales.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.wnsales.model.User;
 import com.wnsales.model.dto.UserDTO;
 import com.wnsales.service.UserService;
@@ -14,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor

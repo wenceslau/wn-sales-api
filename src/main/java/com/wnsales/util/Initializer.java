@@ -27,7 +27,7 @@ public class Initializer {
     public void init(){
 
         String reg = "^PT[0-9]{2}[0-9]{21}$";
-            String vlr = "PT50003800015623391998072";
+            String vlr = "PT10003800015623391998072";
         System.out.println(Pattern.matches(reg, vlr));
 
         User user1 = new User();

@@ -1,11 +1,7 @@
 package com.wnsales.controller;
 
-import com.wnsales.model.Account;
 import com.wnsales.model.dto.LinkDTO;
-import com.wnsales.model.request.ConfirmResponse;
-import com.wnsales.model.request.PaymentRequest;
-import com.wnsales.model.request.PaymentResponse;
-import com.wnsales.model.request.ProductRequest;
+import com.wnsales.model.request.*;
 import com.wnsales.repository.AccountRepository;
 import com.wnsales.repository.ProductRepository;
 import com.wnsales.service.PaymentService;
@@ -79,7 +75,10 @@ class PaymentControllerTest {
         PaymentResponse payResp = new PaymentResponse();
         payResp.setIban("PT50003800015623391998072");
         payResp.setAccountId(1L);
-        payResp.getProducts().add(prodRq);
+        ProductResponse presp = new ProductResponse();
+        presp.setId(prodRq.getId());
+        presp.setAmount(prodRq.getAmount());
+        payResp.getProducts().add(presp);
         payResp.setTotalPayment(BigDecimal.TEN);
 
         PaymentRequest payReq = new PaymentRequest();
@@ -109,7 +108,10 @@ class PaymentControllerTest {
         PaymentResponse payResp = new PaymentResponse();
         payResp.setIban("PT50003800015623391998072");
         payResp.setAccountId(1L);
-        payResp.getProducts().add(prodRq);
+        ProductResponse presp = new ProductResponse();
+        presp.setId(prodRq.getId());
+        presp.setAmount(prodRq.getAmount());
+        payResp.getProducts().add(presp);
         payResp.setTotalPayment(BigDecimal.TEN);
 
         PaymentRequest payReq = new PaymentRequest();

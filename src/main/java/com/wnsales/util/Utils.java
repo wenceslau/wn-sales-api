@@ -22,83 +22,6 @@ public class Utils {
 	private static final Logger logger = LoggerFactory.getLogger(Utils.class);
 	private static final Gson gson = new Gson();
 
-	private static String osName = System.getProperty("os.name").toLowerCase();
-	public static String packaging;
-	public static String versionParent;
-	public static String warname;
-	
-	public static boolean debug = true;
-	public static boolean info = true;
-	public static boolean warn = true;
-	public static boolean error = true;
-
-	/*
-	 * Contexto da aplicacao no Spring
-	 * A variavel eh atribuida na classe CoreAppListener
-	 * quando o evento applicationReadyEvent foi disparado
-	 * A classe CoreAppListener injeta o contexo usando o Autowired
-	 * e assim quardamos ele aqui para poder recuperar objetos do contexto
-	 * onde ele nao esta disponivel, como nas classes Listener do Hibernate
-	 */
-	public static ApplicationContext context;
-
-
-	/**
-	 * Retorna um diretorio temporario onde sera gravados arquivos temporarios
-	 * @return texto
-	 */
-	public static String getPathTemp() {
-		String tempDir = "";
-
-		try {
-
-			File f;
-
-			if (isWindows())
-				f = new File("/temp/");
-			else
-				f = new File("/tmp/");
-
-			try {
-
-				if (!f.exists())
-					f.mkdir();
-
-				tempDir = f.getAbsolutePath() + "/";
-
-			} catch (Exception e) {
-
-				throw new RuntimeException("Erro ao criar dir temp", e);
-
-			}
-
-		} catch (Exception e) {
-
-			throw new RuntimeException("Erro ao identificar diretorio temp.", e);
-
-		}
-
-		return tempDir;
-
-	}
-
-	public static String getOsName() {
-		return osName;
-	}
-
-	public static boolean isWindows() {
-		return (osName.contains("win"));
-	}
-
-	public static boolean isMac() {
-		return (osName.contains("mac"));
-	}
-
-	public static boolean isUnix() {
-		return (osName.contains("nix") || osName.contains("nux") || osName.contains("aix"));
-	}
-	// ******************************************************//
-
 	/* JSON */
 
 	/**
@@ -170,38 +93,6 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	/**
-	 * Monta uma mensage par ao log
-	 * @param clsMthLn texto
-	 * @param ste pilha
-	 */
-	public static void prepareMsgLogger(StringBuilder clsMthLn, StackTraceElement ste) {
-
-		clsMthLn.append("[").append(ste.getClassName()).append(".").append(ste.getMethodName()).append(":").append(ste.getLineNumber());
-
-		if (clsMthLn.length() > 61)
-			clsMthLn.delete(1, clsMthLn.length() - 61);
-		else
-			for (int i = clsMthLn.length(); i <= 61; i++)
-				clsMthLn.append(".");
-
-		clsMthLn.append("] ");
-	}
-
-	/**
-	 * Recuera do contexo o objeto baseado o nome. O objeto context eh injetado
-	 * no CoreAppListener e depois reatribuido a variavel estatica do UtilsCore
-	 * @param name
-	 * @return
-	 */
-	public static Object getBean(String name) {
-		if (context != null) {
-			return context.getBean(name);
-		} else {
-			throw new RuntimeException("msg_o_contexto_da_a_e_n");
-		}
 	}
 
 }

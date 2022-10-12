@@ -1,7 +1,6 @@
 package com.wnsales.model.request;
 
 import com.wnsales.model.Product;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

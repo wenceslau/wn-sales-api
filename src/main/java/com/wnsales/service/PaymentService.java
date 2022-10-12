@@ -5,8 +5,6 @@ import com.wnsales.model.request.ConfirmResponse;
 import com.wnsales.model.request.PaymentRequest;
 import com.wnsales.model.request.PaymentResponse;
 
-import java.util.UUID;
-
 public interface PaymentService {
 
     LinkDTO create(Long accoundId, PaymentRequest paymentRequest);
