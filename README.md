@@ -55,3 +55,10 @@ docker compose up -d
 After follow all the instructions
 
 It just go to http://localhost:8080/ui/ to access the application
+
+There are a endpoint to creat some records. If it's useful 
+
+  curl -X 'POST' \
+  'http://localhost:8083/initializer/init' \
+  -H 'accept: */*' \
+  -d ''
