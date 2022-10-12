@@ -51,3 +51,7 @@ docker compose up -d
 - Network wn-sales-api_salesnet  Created    0.8s
 - Container sales-api            Started    1.6s
 - Container sales-ui             Started    0.5s
+
+After follow all the instructions
+
+It just go to http://localhost:8080/ui/ to access the application
