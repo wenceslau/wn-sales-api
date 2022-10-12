@@ -2,6 +2,7 @@ package com.wnsales.util.validations;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.regex.Pattern;
 
 public class IbanConstraintImpl implements ConstraintValidator<IbanConstraint, String> {
 
@@ -15,6 +16,7 @@ public class IbanConstraintImpl implements ConstraintValidator<IbanConstraint, S
         if(iban == null || iban.trim().isEmpty() || iban.contains(" ")){
             return false;
         }
-        return true;
+        String reg = "^PT[0-9]{2}[0-9]{21}$";
+        return Pattern.matches(reg, iban);
     }
 }

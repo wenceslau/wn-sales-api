@@ -15,7 +15,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -58,26 +57,48 @@ public class AccountServiceImpl extends _DefaultService implements AccountServic
             throw new RuntimeException("Users is required");
         }
 
-        if (userRepository.existsById(account.getUser().getId())){
-            return accountRepository.save(account);
+        if (!userRepository.existsById(account.getUser().getId())){
+            throw new RuntimeException("Invalid user");
         }
 
-        throw new RuntimeException("Invalid user");
+        return accountRepository.save(account);
     }
 
     @Override
-    public Account edit(Long userId, Account account) {
-        Account target = findById(userId).get();
+    public Account edit(Long accountId, Account account) {
 
+        if (account.getUser() == null){
+            throw new RuntimeException("Users is required");
+        }
+
+        if (!userRepository.existsById(account.getUser().getId())) {
+            throw new RuntimeException("Invalid user");
+        }
+
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
+        if(accountOptional.isEmpty()){
+            throw new RuntimeException("Invalid account");
+        }
+
+        Account target = accountOptional.get();
         BeanUtils.copyProperties(account, target, "id");
-
         return accountRepository.save(target);
     }
 
     @Override
-    public Account partialEdit(Long userId, Account account) {
+    public Account partialEdit(Long accountId, Account account) {
 
-        Account target = findById(userId).get();
+        if (account.getUser() != null){
+            if (!userRepository.existsById(account.getUser().getId())){
+                throw new RuntimeException("Invalid account");
+            }
+        }
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
+        if(accountOptional.isEmpty()){
+            throw new RuntimeException("Invalid account");
+        }
+
+        Account target = accountOptional.get();
 
         var ignore = new ArrayList<>(List.of("uid"));
         addPropertyNullToIgnore(account, ignore);

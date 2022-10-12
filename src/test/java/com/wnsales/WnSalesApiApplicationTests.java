@@ -1,4 +1,4 @@
-package com.wnsales.wnsalesapi;
+package com.wnsales;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

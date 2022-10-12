@@ -5,6 +5,7 @@ import com.wnsales.repository.UserRepository;
 import com.wnsales.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +21,8 @@ import java.util.UUID;
 @RequiredArgsConstructor //This annotation already inject constructor with autowired
 public class UserServiceImpl extends _DefaultService implements UserService {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Page<User> findAll(Pageable pageable) {

@@ -1,6 +1,8 @@
 package com.wnsales.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wnsales.model.Account;
+import com.wnsales.model.User;
 import com.wnsales.util.validations.IbanConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +32,8 @@ public class AccountDTO {
     @NotNull
     private Long userId;
 
+    //private UserDTO user;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,8 +48,11 @@ public class AccountDTO {
 
     //Builder
     private AccountDTO(Account model) {
-        BeanUtils.copyProperties(model, this);
-        this.userId = model.getId();
+        BeanUtils.copyProperties(model, this, "user");
+        //this.user = UserDTO.of(model.getUser());
+        if (model.getUser() != null) {
+            this.userId = model.getUser().getId();
+        }
     }
 
     public static AccountDTO of(Account source){

@@ -15,6 +15,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(final HttpMessageNotReadableException ex, final HttpHeaders headers,
 																  final HttpStatus status, final WebRequest request) {
-		String msgs = "Invalid JSON. " + exceptionMessage(ex);
+		String msgs = "Invalid format. ";// + exceptionMessage(ex);
 		return handleExceptionInternal(ex, new Error(msgs,HttpStatus.UNPROCESSABLE_ENTITY), headers, HttpStatus.UNPROCESSABLE_ENTITY, request);
 	}
 
@@ -55,10 +56,12 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 
+
+
 	// Execeção para Null Pointer
 	@org.springframework.web.bind.annotation.ExceptionHandler({ NullPointerException.class })
 	public ResponseEntity<Object> handleNullPointerException(NullPointerException ex, WebRequest request) {
-		String msgs = "Internal failure. " + exceptionMessage(ex);
+		String msgs = "Internal failure.";// + exceptionMessage(ex);
 		return handleExceptionInternal(ex, new Error(msgs,HttpStatus.BAD_REQUEST), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 
 	}
@@ -73,13 +76,19 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
 	// Execeção para erros de PK no banco
 	@org.springframework.web.bind.annotation.ExceptionHandler({ DataIntegrityViolationException.class, JpaObjectRetrievalFailureException.class })
 	public ResponseEntity<Object> handleDataIntegrityViolationException(Exception ex, WebRequest request) {
-		String msgs = "Integridade de dados na base violada. " + exceptionMessage(ex);
+		String msgs = "This resource is in used. ";//+ exceptionMessage(ex);
 		return handleExceptionInternal(ex,  new Error(msgs,HttpStatus.BAD_REQUEST), new HttpHeaders(),  HttpStatus.BAD_REQUEST, request);
 	}
 
 	// Execeção genericas
 	@org.springframework.web.bind.annotation.ExceptionHandler({ RuntimeException.class })
 	public ResponseEntity<Object> handleRuntimeException(RuntimeException ex, WebRequest request) {
+		String msgs = exceptionMessage(ex);
+		return handleExceptionInternal(ex,  new Error(msgs,HttpStatus.BAD_REQUEST), new HttpHeaders(),  HttpStatus.BAD_REQUEST, request);
+	}
+
+	@org.springframework.web.bind.annotation.ExceptionHandler({ MethodArgumentTypeMismatchException.class })
+	public ResponseEntity<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
 		String msgs = exceptionMessage(ex);
 		return handleExceptionInternal(ex,  new Error(msgs,HttpStatus.BAD_REQUEST), new HttpHeaders(),  HttpStatus.BAD_REQUEST, request);
 	}

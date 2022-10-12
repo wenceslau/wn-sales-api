@@ -49,7 +49,10 @@ public class Product {
     //Builder
     private Product(ProductDTO dto) {
         BeanUtils.copyProperties(dto, this);
-        this.account = Account.of(dto.getAccount());
+        if (dto.getAccountId() != null){
+            this.account = new Account();
+            this.account.setId(dto.getAccountId());
+        }
     }
 
     public static Product of(ProductDTO source){

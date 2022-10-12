@@ -7,4 +7,6 @@ import java.util.UUID;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
+    boolean existsById(Long id);
+
 }

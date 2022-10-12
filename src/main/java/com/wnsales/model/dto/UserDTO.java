@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -32,7 +33,7 @@ public class UserDTO {
     @NotBlank
     private String email;
 
-    private Set<AccountDTO> accounts;
+    private Set<AccountDTO> accounts = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

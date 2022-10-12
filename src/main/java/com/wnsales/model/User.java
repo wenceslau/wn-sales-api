@@ -31,7 +31,7 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Account> accounts = Collections.EMPTY_SET;
+    private Set<Account> accounts = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

@@ -1,5 +1,6 @@
 package com.wnsales.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wnsales.model.Product;
 import com.wnsales.model.User;
 import lombok.AllArgsConstructor;
@@ -7,8 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
@@ -20,19 +24,17 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class ProductDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Long id;
 
-    @Column(name = "NAME")
+    @NotBlank
     private String name;
 
-    @Column(name = "PRICE")
+    @NotNull
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "ACCOUNT_ID")
+    @NotNull
+    private Long accountId;
+
     private AccountDTO account;
 
     @Override
@@ -49,8 +51,11 @@ public class ProductDTO {
 
     //Builder
     private ProductDTO(Product model) {
-        BeanUtils.copyProperties(model, this);
+        BeanUtils.copyProperties(model, this, "account");
         this.account = AccountDTO.of(model.getAccount());
+        if (model.getAccount() != null) {
+            this.accountId = model.getAccount().getId();
+        }
     }
 
     public static ProductDTO of(Product source){
@@ -61,6 +66,10 @@ public class ProductDTO {
 
     public static Set<ProductDTO> of(Set<Product> source){
         return source.stream().map(ProductDTO::new).collect(Collectors.toSet());
+    }
+
+    public static Page<ProductDTO> of(Page<Product> source){
+        return source.map(ProductDTO::new);
     }
 
 }

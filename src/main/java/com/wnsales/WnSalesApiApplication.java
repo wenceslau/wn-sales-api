@@ -1,4 +1,4 @@
-package com.wnsales.wnsalesapi;
+package com.wnsales;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
