@@ -31,6 +31,10 @@ public class PaymentServiceImpl implements PaymentService {
             throw new RuntimeException("Account invalid");
         }
 
+        if (paymentRequest.getProducts() == null || paymentRequest.getProducts().isEmpty()){
+            throw new RuntimeException("Products are required");
+        }
+
         for (ProductRequest productRequest : paymentRequest.getProducts()) {
             Optional<Product> product = productRepository.findById(productRequest.getId());
 
@@ -49,7 +53,7 @@ public class PaymentServiceImpl implements PaymentService {
         //Simple Memory storage :)
         memoryStorage.add(paymentRequest);
 
-        return new LinkDTO("http://localhost:4200/payment/"+paymentRequest.getLinkId());
+        return new LinkDTO("http://localhost:8080/ui/?par="+paymentRequest.getLinkId());
     }
 
     public PaymentResponse payment(PaymentRequest paymentRequest){

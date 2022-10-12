@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  java:
+    build:
+      context: .
+      dockerfile: dockerfile-api
+    image: wenceslau/sales-api:prod
+    container_name: sales-api
+    networks:
+      - salesnet
+    ports:
+      - "8083:8083"
+
+  angular:
+    build:
+      context: .
+      dockerfile: dockerfile-ui
+    image: wenceslau/sales-ui:prod
+    container_name: sales-ui
+    networks:
+      - salesnet
+    ports:
+      - "8080:80"
+
+networks:
+  salesnet:
+    driver: bridge
