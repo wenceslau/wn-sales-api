@@ -3,7 +3,7 @@ Project Payment Provider, Wenceslau Neto Sales API
 
 ______________________________________________________________
 # Recommended use docker compose to run and test de applications
-## Instructions below
+## Instructions at the end of this file
 _______________________________________________________________
 
 # INFORMATION
